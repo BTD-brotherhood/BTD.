@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      /* Update these styles */
+      body {
+        margin: 0;
+        background: #1a2433; /* Solid background instead of transparent */
+      }
+
+      .scroll-container {
+        height: 100vh;
+        overflow-y: scroll; /* Changed from auto to scroll */
+        background: #1a2433;
+        position: relative;
+        will-change: transform;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Update section styles */
+      .section {
+        min-height: 100vh;
+        background: #1a2433; /* Solid background */
+        position: relative;
+        z-index: 1;
+      }
+
+      .section-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #1a2433; /* Solid background */
+      }
+
+      /* Update table styles */
+      .team-table {
+        background: #2c3e50; /* Solid background */
+        color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .team-table thead {
+        background: #1a2433; /* Solid background */
+      }
+
+      /* Update scrollbar styles */
+      .scroll-container::-webkit-scrollbar {
+        width: 12px; /* Slightly wider for better usability */
+      }
+
+      .scroll-container::-webkit-scrollbar-track {
+        background: #1a2433;
+        border-radius: 6px;
+      }
+
+      .scroll-container::-webkit-scrollbar-thumb {
+        background: #3498db;
+        border-radius: 6px;
+        border: 3px solid #1a2433;
+      }
+
+      .scroll-container::-webkit-scrollbar-thumb:hover {
+        background: #2980b9;
+      }
+
+      .team-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: rgba(26, 36, 51, 0.95);
+        color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        margin: 20px auto;
+        max-width: 1200px;
+      }
+
+      .team-table thead {
+        background: linear-gradient(45deg, #1a2433, #2c3e50);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .team-table th {
+        padding: 20px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 1.1em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #3498db;
+      }
+
+      .team-table td {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(52, 152, 219, 0.1);
+      }
+
+      .table-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #3498db;
+        transition: transform 0.3s ease;
+      }
+
+      /* Mobile responsive styles */
+      @media (max-width: 768px) {
+        .team-table {
+          margin: 10px;
+          font-size: 14px;
+        }
+
+        .team-table thead {
+          display: none; /* Hide headers on mobile */
+        }
+
+        .team-table, 
+        .team-table tbody, 
+        .team-table tr, 
+        .team-table td {
+          display: block;
+          width: 100%;
+        }
+
+        .team-table tr {
+          margin-bottom: 15px;
+          border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+          padding: 10px;
+        }
+
+        .team-table tr:last-child {
+          border-bottom: none;
+        }
+
+        .team-table td {
+          text-align: center;
+          padding: 8px 10px;
+          border: none;
+        }
+
+        .team-table td:before {
+          content: attr(data-label);
+          display: block;
+          font-weight: bold;
+          color: #3498db;
+          margin-bottom: 5px;
+          font-size: 0.9em;
+          text-transform: uppercase;
+        }
+
+        .table-avatar {
+          width: 80px;
+          height: 80px;
+          margin: 10px auto;
+          display: block;
+        }
+
+        /* Name styling */
+        .team-table td:nth-child(2) {
+          font-size: 1.2em;
+          color: #fff;
+          font-weight: bold;
+        }
+
+        /* Position styling */
+        .team-table td:nth-child(3) {
+          color: #e74c3c;
+          font-style: italic;
+        }
+
+        /* Description styling */
+        .team-table td:nth-child(4) {
+          color: #bdc3c7;
+          line-height: 1.4;
+        }
+      }
+
+      /* Tablet responsive styles */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .team-table {
+          margin: 15px;
+        }
+
+        .team-table th,
+        .team-table td {
+          padding: 12px 15px;
+        }
+
+        .table-avatar {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      /* Animation for table rows */
+      .team-table tr {
+        transition: background-color 0.3s ease;
+      }
+
+      .team-table tbody tr:hover {
+        background: rgba(52, 152, 219, 0.1);
+      }
+
+      .team-table tr:hover .table-avatar {
+        transform: scale(1.1);
+      }
+
+      /* Smooth table appearance */
+      .team-table.hidden {
+        display: none;
+      }
+
+      /* Table container for better scrolling on mobile */
+      .table-container {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      /* Update view toggle button styles */
+      .view-toggle-btn {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      .view-toggle-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        background: linear-gradient(45deg, #3498db, #2c3e50);
+      }
+
+      .view-toggle-btn:active {
+        transform: translateY(1px);
+      }
+
+      .view-icon {
+        font-size: 1.2em;
+        transition: transform 0.3s ease;
+      }
+
+      .view-toggle-btn:hover .view-icon {
+        transform: rotate(180deg);
+      }
+
+      /* Animation for view transitions */
+      .fade-out {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .fade-in {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      /* Enhanced card animations and effects */
+      .card {
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        background: linear-gradient(45deg, 
+          #3498db, 
+          #2ecc71, 
+          #e74c3c, 
+          #f1c40f
+        );
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        animation: borderGlow 3s linear infinite;
+      }
+
+      @keyframes borderGlow {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+      }
+
+      .avatar-link-wrapper:hover .card::before {
+        opacity: 1;
+      }
+
+      .visual {
+        position: relative;
+        transition: all 0.5s ease;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+
+      .visual::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(52, 152, 219, 0.2) 0%,
+          transparent 70%
+        );
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .avatar-link-wrapper:hover .visual::after {
+        opacity: 1;
+      }
+
+      .avatar-img {
+        transition: all 0.5s ease;
+        backface-visibility: hidden;
+      }
+
+      .avatar-link-wrapper:hover .avatar-img {
+        transform: scale(1.1) rotate(5deg);
+        filter: brightness(1.1) contrast(1.1);
+      }
+
+      /* Orbital trail effect */
+      .card::after {
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        background: radial-gradient(
+          circle at center,
+          transparent 30%,
+          rgba(52, 152, 219, 0.1) 70%,
+          transparent 71%
+        );
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .cards:hover .card::after {
+        opacity: 1;
+      }
+
+      /* Enhanced tooltip animations */
+      .tooltiptext {
+        transform: translateX(20px) scale(0.95);
+        transform-origin: left center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(52, 152, 219, 0.2);
+        box-shadow: 
+          0 10px 20px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(52, 152, 219, 0.1);
+      }
+
+      .avatar-link-wrapper:hover .tooltiptext {
+        transform: translateX(0) scale(1);
+      }
+
+      /* Matrix-style text effect for team names */
+      @keyframes textGlitch {
+        0% { text-shadow: 2px 0 #3498db, -2px 0 #e74c3c; }
+        25% { text-shadow: -2px 0 #3498db, 2px 0 #e74c3c; }
+        50% { text-shadow: 2px 0 #e74c3c, -2px 0 #3498db; }
+        75% { text-shadow: -2px 0 #e74c3c, 2px 0 #3498db; }
+        100% { text-shadow: 2px 0 #3498db, -2px 0 #e74c3c; }
+      }
+
+      .team-name {
+        position: relative;
+        animation: textGlitch 5s infinite linear paused;
+      }
+
+      .avatar-link-wrapper:hover .team-name {
+        animation-play-state: running;
+      }
+
+      /* Enhanced revolution animation */
+      @keyframes adjust-angle {
+        from {
+          --angle: 0deg;
+        }
+        to {
+          --angle: 360deg;
+        }
+      }
+
+      .cards {
+        position: relative;
+      }
+
+      .cards::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          rgba(52, 152, 219, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 4s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.5; }
+        50% { transform: scale(1.1); opacity: 0.3; }
+      }
+
+      /* Smooth transition between views */
+      .cards.hidden {
+        animation: fadeOut 0.3s ease forwards;
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+      }
+
+      /* Add particle effects */
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #3498db;
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+      }
+
+      @keyframes particleFloat {
+        0% { transform: translate(0, 0); opacity: 1; }
+        100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+      }
+
+      /* Mobile-optimized animations and effects */
+      @media (max-width: 768px) {
+        .cards {
+          --radius: min(min(250px, 30cqi), 40vmin);
+          transform: scale(0.85) translateZ(0);
+          margin-top: 0;
+        }
+
+        .card {
+          position: absolute;
+          transform-origin: center center;
+          will-change: transform;
+          touch-action: none;
+        }
+
+        /* Prevent text selection during touch */
+        .card, .card * {
+          -webkit-user-select: none;
+          user-select: none;
+          -webkit-touch-callout: none;
+        }
+
+        /* Improve touch area size */
+        .avatar-link-wrapper {
+          padding: 15px;
+          margin: -15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cards {
+          --radius: min(min(200px, 25cqi), 35vmin);
+          transform: scale(0.75);
+        }
+
+        .visual {
+          inline-size: min(80px, 12vmin);
+        }
+
+        .card {
+          --inline-ratio: 0.7;
+          --block-ratio: 0.5;
+        }
+      }
+
+      @media (max-width: 768px) and (orientation: landscape) {
+        .cards {
+          --radius: min(min(200px, 25cqi), 30vmin);
+          margin-top: 0;
+        }
+
+        .card {
+          --block-ratio: 0.4;
+        }
+      }
+
+      .cards {
+        transition: transform 0.3s ease;
+      }
+
+      @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+        .card {
+          transition: transform 0.3s ease, scale 0.3s ease;
+        }
+
+        .card:hover {
+          scale: 1.1;
+          z-index: 2;
+        }
+
+        .cards:hover .card {
+          animation-play-state: paused;
+        }
+      }
+
+      @keyframes touchPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+      @media (hover: none) {
+        .card:active .visual {
+          animation: touchPulse 0.3s ease-out;
+        }
+
+        .cards {
+          touch-action: none;
+        }
+
+        .cards.momentum {
+          transition: --angle 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card {
+          transform-origin: center center;
+          touch-action: manipulation;
+        }
+      }
+
+      /* Add/update these styles */
+      .section {
+        overflow: hidden; /* Prevent page scroll during touch interactions */
+        touch-action: none; /* Disable default touch behaviors */
+      }
+
+      .team-container {
+        position: relative;
+        overflow: visible;
+        touch-action: none;
+        transform: translateZ(0); /* Force GPU acceleration */
+      }
+
+      .cards {
+        position: relative;
+        transform-style: preserve-3d;
+        will-change: transform;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+        padding: 20px;
+        margin: -20px; /* Compensate for padding */
+      }
+
+      /* Add momentum transition */
+      .cards.with-momentum {
+        transition: --angle 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Update/add these table-related styles */
+      
+      /* Enhanced mobile table styles */
+      @media (max-width: 768px) {
+        .table-container {
+          margin: 0;
+          padding: 10px;
+          background: rgba(26, 36, 51, 0.95);
+          border-radius: 15px;
+        }
+
+        .team-table {
+          margin: 0;
+          box-shadow: none;
+          background: transparent;
+        }
+
+        .team-table tbody {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 15px;
+          padding: 5px;
+        }
+
+        .team-table tr {
+          background: linear-gradient(
+            135deg,
+            rgba(52, 152, 219, 0.1) 0%,
+            rgba(26, 36, 51, 0.95) 100%
+          );
+          border-radius: 12px;
+          border: 1px solid rgba(52, 152, 219, 0.2);
+          padding: 20px;
+          display: grid;
+          gap: 10px;
+          transition: all 0.3s ease;
+        }
+
+        .team-table tr:active {
+          transform: scale(0.98);
+          background: linear-gradient(
+            135deg,
+            rgba(52, 152, 219, 0.2) 0%,
+            rgba(26, 36, 51, 0.95) 100%
+          );
+        }
+
+        /* Photo styling */
+        .team-table td:first-child {
+          padding: 0;
+          margin-bottom: 10px;
+        }
+
+        .table-avatar {
+          width: 100px;
+          height: 100px;
+          border: 3px solid rgba(52, 152, 219, 0.3);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+        }
+
+        .team-table tr:active .table-avatar {
+          transform: scale(1.05);
+          border-color: #3498db;
+        }
+
+        /* Name styling */
+        .team-table td:nth-child(2) {
+          font-size: 1.4em;
+          color: #fff;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          letter-spacing: 1px;
+          margin-bottom: 5px;
+        }
+
+        /* Position styling */
+        .team-table td:nth-child(3) {
+          font-size: 1em;
+          color: #3498db;
+          font-style: italic;
+          opacity: 0.9;
+          margin-bottom: 10px;
+        }
+
+        /* Description styling */
+        .team-table td:nth-child(4) {
+          font-size: 0.95em;
+          color: #bdc3c7;
+          line-height: 1.5;
+          padding: 10px 0;
+          border-top: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        /* Labels styling */
+        .team-table td::before {
+          font-size: 0.8em;
+          color: #3498db;
+          opacity: 0.8;
+          margin-bottom: 5px;
+        }
+
+        /* Card hover/active effects */
+        .team-table tr {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .team-table tr::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(
+            to right,
+            transparent,
+            #3498db,
+            transparent
+          );
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .team-table tr:active::after {
+          opacity: 1;
+        }
+      }
+
+      /* Small mobile devices */
+      @media (max-width: 480px) {
+        .table-container {
+          padding: 8px;
+        }
+
+        .team-table tbody {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .team-table tr {
+          padding: 15px;
+        }
+
+        .table-avatar {
+          width: 80px;
+          height: 80px;
+        }
+
+        .team-table td:nth-child(2) {
+          font-size: 1.2em;
+        }
+
+        .team-table td:nth-child(3) {
+          font-size: 0.9em;
+        }
+
+        .team-table td:nth-child(4) {
+          font-size: 0.85em;
+        }
+      }
+
+      /* Landscape mode */
+      @media (max-width: 768px) and (orientation: landscape) {
+        .table-container {
+          max-height: 85vh;
+        }
+
+        .team-table tbody {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Animation for table appearance */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .team-table tr {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .team-table tr:nth-child(1) { animation-delay: 0.1s; }
+      .team-table tr:nth-child(2) { animation-delay: 0.2s; }
+      .team-table tr:nth-child(3) { animation-delay: 0.3s; }
+      .team-table tr:nth-child(4) { animation-delay: 0.4s; }
+      .team-table tr:nth-child(5) { animation-delay: 0.5s; }
+      .team-table tr:nth-child(6) { animation-delay: 0.6s; }
+
+      /* Add/update matrix styles */
+      .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        opacity: 0.2; /* Increased opacity for better visibility */
+        pointer-events: none;
+        background: transparent;
+      }
+
+      /* Update section styles to work with matrix */
+      .section {
+        position: relative;
+        z-index: 1;
+        background: transparent; /* Remove solid background */
+      }
+
+      .section-wrapper {
+        background: rgba(26, 36, 51, 0.92);
+        backdrop-filter: blur(5px);
+        border-radius: 15px;
+        margin: 20px;
+        padding: 20px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Update scroll container */
+      .scroll-container {
+        position: relative;
+        z-index: 1;
+        background: transparent;
+      }
+
+      /* Update table styles for better visibility with matrix */
+      .team-table {
+        background: rgba(44, 62, 80, 0.95);
+        backdrop-filter: blur(8px);
+      }
+
+      /* Add/update these styles for better laptop layout */
+      @media (min-width: 1025px) {
+        .section-wrapper {
+          max-width: 1400px;
+          padding: 40px;
+          margin: 0 auto;
+        }
+
+        /* Enhanced table styles for laptop */
+        .team-table {
+          width: 90%;
+          margin: 30px auto;
+          border-spacing: 0 10px; /* Add spacing between rows */
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-table thead {
+          height: 60px;
+        }
+
+        .team-table th {
+          padding: 20px 30px;
+          font-size: 1.1em;
+          letter-spacing: 1.5px;
+          border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .team-table td {
+          padding: 25px 30px;
+          font-size: 1.05em;
+          line-height: 1.6;
+        }
+
+        /* Row hover effects */
+        .team-table tbody tr {
+          transition: all 0.3s ease;
+          transform: translateX(0);
+        }
+
+        .team-table tbody tr:hover {
+          background: rgba(52, 152, 219, 0.1);
+          transform: translateX(10px) scale(1.01);
+          box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Avatar styling */
+        .table-avatar {
+          width: 65px;
+          height: 65px;
+          border-width: 3px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-table tr:hover .table-avatar {
+          transform: scale(1.15) rotate(5deg);
+          border-color: #3498db;
+          box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Column specific styles */
+        .team-table td:nth-child(2) { /* Name column */
+          font-size: 1.2em;
+          font-weight: 600;
+          color: #fff;
+        }
+
+        .team-table td:nth-child(3) { /* Position column */
+          font-size: 1.1em;
+          color: #3498db;
+          font-style: italic;
+        }
+
+        .team-table td:nth-child(4) { /* Description column */
+          color: #bdc3c7;
+          line-height: 1.6;
+          max-width: 400px;
+        }
+
+        /* View toggle button */
+        .view-controls {
+          padding: 20px 5%;
+        }
+
+        .view-toggle-btn {
+          padding: 15px 30px;
+          font-size: 1.1em;
+        }
+
+        /* Table container */
+        .table-container {
+          padding: 20px;
+          border-radius: 20px;
+          background: rgba(26, 36, 51, 0.4);
+        }
+      }
+
+      /* Add styles for extra large screens */
+      @media (min-width: 1600px) {
+        .section-wrapper {
+          max-width: 1600px;
+        }
+
+        .team-table {
+          width: 85%;
+        }
+
+        .table-avatar {
+          width: 75px;
+          height: 75px;
+        }
+
+        .team-table td {
+          padding: 30px 35px;
+          font-size: 1.1em;
+        }
+      }
+
+      /* Add/update these styles for profile rotation */
+      .profile-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 2000px;
+      }
+
+      .profile-circle {
+        position: relative;
+        width: 800px;
+        height: 800px;
+        transform-style: preserve-3d;
+        animation: rotate 30s infinite linear;
+      }
+
+      .profile-card {
+        position: absolute;
+        width: 200px;
+        height: 300px;
+        left: 50%;
+        top: 50%;
+        transform-origin: center;
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease;
+        cursor: pointer;
+      }
+
+      /* Position each card around the circle */
+      .profile-card:nth-child(1) { transform: translate(-50%, -50%) rotateY(0deg) translateZ(400px); }
+      .profile-card:nth-child(2) { transform: translate(-50%, -50%) rotateY(60deg) translateZ(400px); }
+      .profile-card:nth-child(3) { transform: translate(-50%, -50%) rotateY(120deg) translateZ(400px); }
+      .profile-card:nth-child(4) { transform: translate(-50%, -50%) rotateY(180deg) translateZ(400px); }
+      .profile-card:nth-child(5) { transform: translate(-50%, -50%) rotateY(240deg) translateZ(400px); }
+      .profile-card:nth-child(6) { transform: translate(-50%, -50%) rotateY(300deg) translateZ(400px); }
+
+      /* Card hover effect */
+      .profile-card:hover {
+        transform: translate(-50%, -50%) rotateY(var(--rotation)) translateZ(450px) scale(1.2);
+      }
+
+      /* Card content styles */
+      .card-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: rgba(44, 62, 80, 0.9);
+        border-radius: 15px;
+        padding: 20px;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Rotation animation */
+      @keyframes rotate {
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(360deg); }
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        .profile-circle {
+          width: 600px;
+          height: 600px;
+        }
+
+        .profile-card {
+          width: 150px;
+          height: 225px;
+        }
+
+        .profile-card:nth-child(n) {
+          transform: translate(-50%, -50%) rotateY(calc(n * 60deg)) translateZ(300px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .profile-circle {
+          width: 400px;
+          height: 400px;
+        }
+
+        .profile-card {
+          width: 120px;
+          height: 180px;
+        }
+
+        .profile-card:nth-child(n) {
+          transform: translate(-50%, -50%) rotateY(calc(n * 60deg)) translateZ(200px);
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay">
+      <div class="loader"></div>
+    </div>
+    <canvas class="matrix-bg"></canvas>
+    <div class="scroll-container">
+      <!-- Progress bar -->
+      <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator"></div>
+
+      <!-- Section 1: Header -->
+      <section class="section" id="section1">
+        <div class="section-wrapper">
+          <header class="header">
+            <hgroup class="hgroup">
+              <img src="logo.png" alt="Company Logo" class="logo">
+              <div class="content-wrapper">
+                <div class="text-group">
+                  <h2 class="headline">BTD: A Brotherhood<br>of Fun and Memories</h2>
+                  <p class="tagline">The House of memories</p>
+                </div>
+                <p class="team-description">
+                  BTD isn't just a group—it's a family full of fun, laughter, and crazy memories. Each member has a special role that makes the gang complete.<br><br>
+
+                  💻 Adiraj – The Designer & Developer<br>
+                    The tech genius. Whether it's making cool posters or fixing a game, he's the mastermind behind all things creative.<br><br>
+
+                  🤝 Angshuman – The Helper<br>
+                    The most reliable one. Need notes? A ride? A last-minute favor? He's always there to help, no questions asked.<br><br>
+
+                  😜 Ishandeep – The Naughty Boy<br>
+                    The troublemaker. His pranks, jokes, and funny tricks make every day exciting. From sneaky plans to hilarious moments, he keeps the gang entertained.<br><br>
+
+                   📚 Dawar – The Topper<br>
+                    The brainiac. While others mess around, he's the one scoring top marks. But he also helps his friends with studies—if they stop distracting him!<br><br>
+
+                  😎 Prabal – The Flirty Boy<br>
+                    Smooth with the ladies. He can turn any moment into a flirty conversation, and his confidence is unmatched.<br><br>
+
+                  🌟 Gaurav – The Center of Attraction<br>
+                    Loud, funny, and full of energy—wherever he goes, all eyes follow.<br><br>
+
+                      🔥 Together, they make BTD—more than a gang, a lifelong bond!
+
+
+                </p>
+              </div>
+            </hgroup>
+          </header>
+          <div class="view-controls">
+            <button id="viewToggle" class="view-toggle-btn">
+              <span class="view-icon">📊</span>
+              <span class="view-text">View Table</span>
+            </button>
+          </div>
+          <div id="teamContainer" class="team-container">
+            <div class="table-container">
+              <table id="teamTable" class="team-table hidden">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Photo"><img src="PIC/adi.jpg" alt="Adiraj" class="table-avatar"></td>
+                    <td data-label="Name">Adiraj</td>
+                    <td data-label="Position">Developer&Designer</td>
+                    <td data-label="Description">Creative coder, innovative thinker, pixels & logic master.💻</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Photo"><img src="PIC/angshuman.jpg" alt="Angshuman" class="table-avatar"></td>
+                    <td data-label="Name">Angshuman</td>
+                    <td data-label="Position">Helper</td>
+                    <td data-label="Description">Always there, reliable, problem fixer. 👍</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Photo"><img src="PIC/ishandeep.jpg" alt="Ishandeep" class="table-avatar"></td>
+                    <td data-label="Name">Ishandeep</td>
+                    <td data-label="Position">Ishan aibee development department head</td>
+                    <td data-label="Description">Aibee development department head.😎</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Photo"><img src="PIC/dawar.jpg" alt="Dawar" class="table-avatar"></td>
+                    <td data-label="Name">Dawar</td>
+                    <td data-label="Position">Dawar genuine genius topper</td>
+                    <td data-label="Description">Genuine, genius, academic topper.</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Photo"><img src="PIC/prabal.png" alt="Codey X" class="table-avatar"></td>
+                    <td data-label="Name">Prabal</td>
+                    <td data-label="Position">seni boy</td>
+                    <td data-label="Description">Flirrrty, naughty. 😏</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Photo"><img src="PIC/gaurav.jpg" alt="Maya R." class="table-avatar"></td>
+                    <td data-label="Name">Gaurav</td>
+                    <td data-label="Position">Center of attraction</td>
+                    <td data-label="Description">Spotlight stealer, too much swag. 😎</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="cards" style="--nth-siblings: 5">
+              <li class="card" style="--nth-child: 1">
+                <a href="#" class="avatar-link-wrapper">
+                  <div class="visual">
+                    <img class="avatar-img"
+                      src="PIC/adi.jpg"
+                      width="144" height="144" alt="Ethan B., DevOps Engineer" />
+                  </div>
+                  <div class="tooltiptext">
+                    <h3 class="team-name">Adiraj</h3>
+                    <div class="team-content-wrapper">
+                      <p class="team-title"><b>Developer&Designer</b></p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="card" style="--nth-child: 2">
+                <a href="#" class="avatar-link-wrapper">
+                  <div class="visual">
+                    <img class="avatar-img"
+                      src="PIC/angshuman.jpg"
+                      width="144" height="144" alt="Angshuman" />
+                  </div>
+                  <div class="tooltiptext">
+                    <h3 class="team-name">Angshuman</h3>
+                    <div class="team-content-wrapper">
+                      <p class="team-title"><b>Helper</b></p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="card" style="--nth-child: 3">
+                <a href="#" class="avatar-link-wrapper">
+                  <div class="visual">
+                    <img class="avatar-img"
+                      src="PIC/ishandeep.jpg"
+                      width="144" height="144" alt="Ishan, <b>aibee development department head</b>" />
+                  </div>
+                  <div class="tooltiptext">
+                    <h3 class="team-name">Ishandeep</h3>
+                    <div class="team-content-wrapper">
+                      <p class="team-title">Aibee Developer 😎</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="card" style="--nth-child: 4">
+                <a href="#" class="avatar-link-wrapper">
+                  <div class="visual">
+                    <img class="avatar-img"
+                      src="PIC/dawar.jpg"
+                      width="144" height="144" alt="Dawar, genuine genius topper" />
+                  </div>
+                  <div class="tooltiptext">
+                    <h3 class="team-name">Dawar</h3>
+                    <div class="team-content-wrapper">
+                      <p class="team-title">Dawar genuine genius topper</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="card" style="--nth-child: 5">
+                <a href="#" class="avatar-link-wrapper">
+                  <div class="visual">
+                    <img class="avatar-img"
+                      src="PIC/prabal.png"
+                      width="144" height="144" alt="Prabal, seni boy" />
+                  </div>
+                  <div class="tooltiptext">
+                    <h3 class="team-name">Prabal</h3>
+                    <div class="team-content-wrapper">
+                      <p class="team-title">seni boy😎</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="card" style="--nth-child: 6">
+                <a href="#" class="avatar-link-wrapper">
+                  <div class="visual">
+                    <img class="avatar-img"
+                      src="PIC/gaurav.jpg"
+                      width="144" height="144" alt="Gurav, Center of attraction" />
+                  </div>
+                  <div class="tooltiptext">
+                    <h3 class="team-name">Gaurav</h3>
+                    <div class="team-content-wrapper">
+                      <p class="team-title">Center of attraction</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="scroll-down">
+      <div class="scroll-down-icon">↓</div>
+      <div class="scroll-down-text">Scroll Down</div>
+    </div>
+    <div class="profile-container">
+      <div class="profile-circle">
+        <div class="profile-card">
+          <div class="card-content">
+            <!-- Card content -->
+          </div>
+        </div>
+        <div class="profile-card">
+          <div class="card-content">
+            <!-- Card content -->
+          </div>
+        </div>
+        <div class="profile-card">
+          <div class="card-content">
+            <!-- Card content -->
+          </div>
+        </div>
+        <div class="profile-card">
+          <div class="card-content">
+            <!-- Card content -->
+          </div>
+        </div>
+        <div class="profile-card">
+          <div class="card-content">
+            <!-- Card content -->
+          </div>
+        </div>
+        <div class="profile-card">
+          <div class="card-content">
+            <!-- Card content -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      class MatrixRain {
+        constructor() {
+          this.canvas = document.querySelector('.matrix-bg');
+          this.ctx = this.canvas.getContext('2d');
+          this.characters = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+          this.fontSize = 16; // Slightly larger font
+          this.drops = [];
+          
+          this.initialize();
+          this.animate();
+
+          window.addEventListener('resize', () => this.initialize());
+        }
+
+        initialize() {
+          const dpr = window.devicePixelRatio || 1;
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          
+          this.canvas.width = width * dpr;
+          this.canvas.height = height * dpr;
+          this.canvas.style.width = `${width}px`;
+          this.canvas.style.height = `${height}px`;
+          
+          this.ctx.scale(dpr, dpr);
+          
+          const columns = Math.floor(width / this.fontSize);
+          this.drops = Array(columns).fill(1);
+        }
+
+        animate() {
+          // Darker fade effect for better contrast
+          this.ctx.fillStyle = 'rgba(26, 36, 51, 0.1)';
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+          this.ctx.font = `bold ${this.fontSize}px monospace`; // Bold font
+          this.ctx.textAlign = 'center';
+
+          for (let i = 0; i < this.drops.length; i++) {
+            const char = this.characters[Math.floor(Math.random() * this.characters.length)];
+            const x = i * this.fontSize;
+            const y = this.drops[i] * this.fontSize;
+
+            // Main bright red color with gradient effect
+            const gradient = this.ctx.createLinearGradient(x, y - this.fontSize, x, y);
+            gradient.addColorStop(0, '#ff6b6b'); // Bright red
+            gradient.addColorStop(1, '#ff1a1a'); // Deep red
+            this.ctx.fillStyle = gradient;
+
+            // Enhanced glow effect
+            this.ctx.shadowColor = '#ff0000';
+            this.ctx.shadowBlur = 10;
+            this.ctx.fillText(char, x, y);
+            this.ctx.shadowBlur = 0;
+
+            // Random bright effects
+            if (Math.random() > 0.975) {
+              // Extra bright characters
+              this.ctx.fillStyle = '#fff'; // White core
+              this.ctx.shadowColor = '#ff3333';
+              this.ctx.shadowBlur = 15;
+              this.ctx.fillText(char, x, y);
+              
+              // Additional glow layer
+              this.ctx.fillStyle = '#ff8080';
+              this.ctx.shadowBlur = 8;
+              this.ctx.fillText(char, x, y);
+            }
+
+            // Reset drop with varied speeds
+            if (y > this.canvas.height && Math.random() > 0.975) {
+              this.drops[i] = 0;
+            }
+            this.drops[i] += Math.random() * 0.5 + 0.5; // Varied falling speeds
+          }
+
+          requestAnimationFrame(() => this.animate());
+        }
+      }
+
+      // Initialize matrix rain
+      document.addEventListener('DOMContentLoaded', () => {
+        const matrix = new MatrixRain();
+      });
+
+      const viewToggleBtn = document.getElementById('viewToggle');
+      const teamContainer = document.getElementById('teamContainer');
+      const teamTable = document.getElementById('teamTable');
+      const cardsList = document.querySelector('.cards');
+      const viewIcon = viewToggleBtn.querySelector('.view-icon');
+      const viewText = viewToggleBtn.querySelector('.view-text');
+
+      // View states
+      const viewStates = [
+        { name: 'cards', icon: '🗃️', text: 'View Table' },
+        { name: 'table', icon: '📊', text: 'View Grid' },
+      ];
+
+      let currentViewIndex = 0;
+
+      function updateViewButton(index) {
+        const state = viewStates[index];
+        viewIcon.textContent = state.icon;
+        viewText.textContent = state.text;
+      }
+
+      async function switchView(fromView, toView) {
+        // Fade out current view
+        fromView.classList.add('fade-out');
+        
+        // Wait for fade out animation
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Hide/show views
+        fromView.classList.add('hidden');
+        toView.classList.remove('hidden');
+        
+        // Reset and trigger fade in
+        toView.classList.add('fade-out');
+        // Force reflow
+        void toView.offsetWidth;
+        toView.classList.remove('fade-out');
+      }
+
+      viewToggleBtn.addEventListener('click', async () => {
+        const nextIndex = (currentViewIndex + 1) % viewStates.length;
+        const currentView = viewStates[currentViewIndex].name === 'cards' ? cardsList : teamTable;
+        const nextView = viewStates[nextIndex].name === 'cards' ? cardsList : teamTable;
+
+        // Update button before animation
+        updateViewButton(nextIndex);
+
+        // Switch views with animation
+        await switchView(currentView, nextView);
+
+        // Update current view index
+        currentViewIndex = nextIndex;
+
+        // Add smooth transition for button
+        viewToggleBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          viewToggleBtn.style.transform = 'scale(1)';
+        }, 150);
+      });
+
+      // Initialize button state
+      updateViewButton(currentViewIndex);
+
+      // Add touch feedback for mobile
+      if ('ontouchstart' in window) {
+        viewToggleBtn.addEventListener('touchstart', () => {
+          viewToggleBtn.style.transform = 'scale(0.95)';
+        });
+
+        viewToggleBtn.addEventListener('touchend', () => {
+          viewToggleBtn.style.transform = 'scale(1)';
+        });
+      }
+
+      function createParticles(event) {
+        const container = document.querySelector('.cards');
+        for (let i = 0; i < 10; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          
+          // Random position around the cursor
+          const x = event.clientX - container.getBoundingClientRect().left;
+          const y = event.clientY - container.getBoundingClientRect().top;
+          
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          
+          // Random direction
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 50 + Math.random() * 50;
+          particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+          particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+          
+          particle.style.animation = `particleFloat ${0.5 + Math.random() * 0.5}s ease-out forwards`;
+          
+          container.appendChild(particle);
+          setTimeout(() => particle.remove(), 1000);
+        }
+      }
+
+      document.querySelector('.cards').addEventListener('mousemove', createParticles);
+
+      // Touch interaction handling
+      function handleTouchInteractions() {
+        const container = document.querySelector('.team-container');
+        let startY = 0;
+        let pullDistance = 0;
+
+        // Create touch indicator
+        const touchIndicator = document.createElement('div');
+        touchIndicator.className = 'touch-indicator';
+        document.body.appendChild(touchIndicator);
+
+        // Touch feedback
+        function showTouchFeedback(x, y) {
+          touchIndicator.style.left = `${x}px`;
+          touchIndicator.style.top = `${y}px`;
+          touchIndicator.classList.add('active');
+          
+          setTimeout(() => {
+            touchIndicator.classList.remove('active');
+          }, 800);
+        }
+
+        // Handle touch events
+        container.addEventListener('touchstart', (e) => {
+          startY = e.touches[0].clientY;
+          showTouchFeedback(e.touches[0].clientX, e.touches[0].clientY);
+        });
+
+        container.addEventListener('touchmove', (e) => {
+          const currentY = e.touches[0].clientY;
+          pullDistance = currentY - startY;
+
+          if (pullDistance > 0 && pullDistance < 150) {
+            container.style.transform = `translateY(${pullDistance * 0.3}px)`;
+          }
+        });
+
+        container.addEventListener('touchend', () => {
+          if (pullDistance > 50) {
+            container.classList.add('pulling');
+            setTimeout(() => {
+              container.classList.remove('pulling');
+            }, 1000);
+          }
+          
+          container.style.transform = '';
+          pullDistance = 0;
+        });
+
+        // Optimize particle effect for touch
+        let touchTimeout;
+        container.addEventListener('touchmove', (e) => {
+          if (touchTimeout) clearTimeout(touchTimeout);
+          
+          touchTimeout = setTimeout(() => {
+            createParticles({
+              clientX: e.touches[0].clientX,
+              clientY: e.touches[0].clientY
+            });
+          }, 50);
+        });
+      }
+
+      // Initialize touch interactions
+      if ('ontouchstart' in window) {
+        handleTouchInteractions();
+      }
+
+      // Replace the handleTouchMomentum function with this improved version
+      function handleTouchMomentum() {
+        const cards = document.querySelector('.cards');
+        let startX = 0;
+        let startY = 0;
+        let lastTouch = null;
+        let currentAngle = 0;
+        let isDragging = false;
+
+        function preventScroll(e) {
+          e.preventDefault();
+        }
+
+        cards.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          isDragging = true;
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          lastTouch = e.timeStamp;
+          
+          // Remove transition during touch
+          cards.classList.remove('with-momentum');
+          
+          // Prevent scrolling during touch
+          document.addEventListener('touchmove', preventScroll, { passive: false });
+        }, { passive: false });
+
+        cards.addEventListener('touchmove', (e) => {
+          if (!isDragging) return;
+          
+          const touch = e.touches[0];
+          const rect = cards.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          // Calculate angle from center
+          const angleStart = Math.atan2(startY - centerY, startX - centerX);
+          const angleNow = Math.atan2(touch.clientY - centerY, touch.clientX - centerX);
+          
+          // Convert to degrees and normalize
+          let angleDelta = (angleNow - angleStart) * (180 / Math.PI);
+          currentAngle = (currentAngle + angleDelta + 360) % 360;
+          
+          // Update the CSS variable smoothly
+          requestAnimationFrame(() => {
+            cards.style.setProperty('--angle', `${currentAngle}deg`);
+          });
+          
+          // Update start position for next move
+          startX = touch.clientX;
+          startY = touch.clientY;
+        }, { passive: true });
+
+        cards.addEventListener('touchend', (e) => {
+          isDragging = false;
+          document.removeEventListener('touchmove', preventScroll);
+          
+          // Add momentum effect
+          cards.classList.add('with-momentum');
+          
+          // Calculate momentum based on final movement speed
+          const endTouch = e.changedTouches[0];
+          const endTime = e.timeStamp;
+          const timeDelta = endTime - lastTouch;
+          
+          if (timeDelta < 100) { // Only add momentum for quick releases
+            const momentumAngle = currentAngle + (currentAngle * 0.1); // Add 10% extra rotation
+            requestAnimationFrame(() => {
+              cards.style.setProperty('--angle', `${momentumAngle}deg`);
+            });
+          }
+          
+          // Reset momentum class after animation
+          setTimeout(() => {
+            cards.classList.remove('with-momentum');
+          }, 500);
+        }, { passive: true });
+
+        // Cleanup function
+        return () => {
+          document.removeEventListener('touchmove', preventScroll);
+        };
+      }
+
+      // Initialize the improved touch handling
+      if ('ontouchstart' in window) {
+        const cleanup = handleTouchMomentum();
+        
+        // Cleanup on page unload
+        window.addEventListener('unload', cleanup);
+      }
+
+      // Scroll handling
+      document.addEventListener('DOMContentLoaded', () => {
+        const scrollContainer = document.querySelector('.scroll-container');
+        const sections = document.querySelectorAll('.section');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const progressBar = document.querySelector('.scroll-progress-bar');
+        const scrollDownBtn = document.querySelector('.scroll-down');
+
+        // Create scroll dots
+        sections.forEach((section, index) => {
+          const dot = document.createElement('div');
+          dot.className = 'scroll-dot';
+          if (index === 0) dot.classList.add('active');
+          
+          // Smooth scroll to section on click
+          dot.addEventListener('click', () => {
+            const targetPosition = section.offsetTop;
+            scrollContainer.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          });
+          
+          scrollIndicator.appendChild(dot);
+        });
+
+        // Throttle scroll updates
+        let ticking = false;
+        
+        scrollContainer.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateScroll();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        function updateScroll() {
+          // Update progress bar
+          const scrollPercentage = (scrollContainer.scrollTop / (scrollContainer.scrollHeight - scrollContainer.clientHeight)) * 100;
+          progressBar.style.width = `${scrollPercentage}%`;
+
+          // Update active dot
+          const scrollPosition = scrollContainer.scrollTop;
+          const windowHeight = window.innerHeight;
+
+          sections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            const dot = scrollIndicator.children[index];
+
+            // Check if section is in viewport
+            if (rect.top < windowHeight / 2 && rect.bottom > windowHeight / 2) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
+
+          // Update scroll down button visibility
+          scrollDownBtn.style.opacity = scrollContainer.scrollTop > 50 ? '0' : '1';
+        }
+
+        // Smooth scroll for mouse wheel
+        scrollContainer.addEventListener('wheel', (e) => {
+          const delta = e.deltaY;
+          scrollContainer.scrollTop += delta;
+        }, { passive: true });
+
+        // Touch handling
+        let touchStartY = 0;
+        let touchStartScroll = 0;
+
+        scrollContainer.addEventListener('touchstart', (e) => {
+          touchStartY = e.touches[0].clientY;
+          touchStartScroll = scrollContainer.scrollTop;
+        }, { passive: true });
+
+        scrollContainer.addEventListener('touchmove', (e) => {
+          const touchY = e.touches[0].clientY;
+          const diff = touchStartY - touchY;
+          scrollContainer.scrollTop = touchStartScroll + diff;
+        }, { passive: true });
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Loading delay
+        setTimeout(() => {
+          document.querySelector('.loading-overlay').classList.add('hidden');
+          
+          // Reveal first section immediately
+          document.querySelector('.section').classList.add('visible');
+          
+          // Initialize smooth scroll
+          initSmoothScroll();
+        }, 1500); // 1.5 second loading delay
+      });
+
+      // Replace the scroll handling code with this optimized version
+      function initSmoothScroll() {
+        const scrollContainer = document.querySelector('.scroll-container');
+        let isScrolling = false;
+        let lastScrollTop = 0;
+        let scrollTimeout;
+
+        // Improved scroll handling
+        function handleScroll() {
+          if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+              const currentScrollTop = scrollContainer.scrollTop;
+              updateScrollProgress(currentScrollTop);
+              lastScrollTop = currentScrollTop;
+              isScrolling = false;
+            });
+            isScrolling = true;
+          }
+        }
+
+        // Simplified progress update
+        function updateScrollProgress(scrollTop) {
+          const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+          const progress = (scrollTop / maxScroll) * 100;
+          document.querySelector('.scroll-progress-bar').style.width = `${progress}%`;
+        }
+
+        // Enhanced wheel event handling for smoother multi-line scrolling
+        function handleWheel(e) {
+          // Allow natural scrolling without interference
+          if (e.deltaMode === 1) { // LINE_MODE
+            scrollContainer.scrollTop += e.deltaY * 20; // Adjust line height multiplier
+          } else {
+            scrollContainer.scrollTop += e.deltaY;
+          }
+        }
+
+        // Improved touch handling
+        let touchStart = null;
+        let touchStartTime = 0;
+        let lastTouchY = 0;
+
+        function handleTouchStart(e) {
+          touchStart = e.touches[0].clientY;
+          lastTouchY = touchStart;
+          touchStartTime = Date.now();
+          clearTimeout(scrollTimeout);
+        }
+
+        function handleTouchMove(e) {
+          if (!touchStart) return;
+
+          const touch = e.touches[0];
+          const deltaY = lastTouchY - touch.clientY;
+          scrollContainer.scrollTop += deltaY * 1.2; // Slightly increased sensitivity
+          lastTouchY = touch.clientY;
+        }
+
+        function handleTouchEnd(e) {
+          if (!touchStart) return;
+
+          const touchEnd = e.changedTouches[0].clientY;
+          const deltaY = touchStart - touchEnd;
+          const timeElapsed = Date.now() - touchStartTime;
+
+          // Add momentum scrolling
+          if (timeElapsed < 300) { // Quick flick
+            const momentum = (deltaY / timeElapsed) * 500;
+            let currentScroll = scrollContainer.scrollTop;
+            
+            const animate = () => {
+              momentum *= 0.95; // Decay factor
+              currentScroll += momentum;
+              scrollContainer.scrollTop = currentScroll;
+
+              if (Math.abs(momentum) > 0.5) {
+                scrollTimeout = requestAnimationFrame(animate);
+              }
+            };
+
+            scrollTimeout = requestAnimationFrame(animate);
+          }
+
+          touchStart = null;
+        }
+
+        // Event listeners
+        scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+        scrollContainer.addEventListener('wheel', handleWheel, { passive: true });
+        scrollContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        scrollContainer.addEventListener('touchmove', handleTouchMove, { passive: true });
+        scrollContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+        // Cleanup
+        return () => {
+          scrollContainer.removeEventListener('scroll', handleScroll);
+          scrollContainer.removeEventListener('wheel', handleWheel);
+          scrollContainer.removeEventListener('touchstart', handleTouchStart);
+          scrollContainer.removeEventListener('touchmove', handleTouchMove);
+          scrollContainer.removeEventListener('touchend', handleTouchEnd);
+          clearTimeout(scrollTimeout);
+        };
+      }
+
+      // Add this to your existing JavaScript
+      document.addEventListener('DOMContentLoaded', () => {
+        const cardsContainer = document.querySelector('.cards-container');
+        const cards = document.querySelectorAll('.card');
+
+        if (window.innerWidth >= 1025) {
+          // Mouse movement tracking
+          cardsContainer.addEventListener('mousemove', (e) => {
+            const rect = cardsContainer.getBoundingClientRect();
+            const mouseX = ((e.clientX - rect.left) / rect.width) - 0.5;
+            const mouseY = ((e.clientY - rect.top) / rect.height) - 0.5;
+
+            cardsContainer.style.setProperty('--mouse-x', mouseX);
+            cardsContainer.style.setProperty('--mouse-y', mouseY);
+          });
+
+          // Add/remove tracking class
+          cardsContainer.addEventListener('mouseenter', () => {
+            cardsContainer.classList.add('tracking');
+          });
+
+          cardsContainer.addEventListener('mouseleave', () => {
+            cardsContainer.classList.remove('tracking');
+            cards.forEach(card => {
+              card.style.transform = '';
+            });
+          });
+
+          // Smooth rotation reset
+          let timeout;
+          window.addEventListener('resize', () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+              cards.forEach(card => {
+                card.style.transform = '';
+              });
+            }, 100);
+          });
+        }
+      });
+
+      // Add this JavaScript for smooth interaction
+      document.addEventListener('DOMContentLoaded', () => {
+        const circle = document.querySelector('.profile-circle');
+        const cards = document.querySelectorAll('.profile-card');
+        let isRotating = true;
+        let startX = 0;
+        let currentRotation = 0;
+
+        // Pause rotation on hover
+        circle.addEventListener('mouseenter', () => {
+          isRotating = false;
+          circle.style.animationPlayState = 'paused';
+        });
+
+        circle.addEventListener('mouseleave', () => {
+          isRotating = true;
+          circle.style.animationPlayState = 'running';
+        });
+
+        // Update card rotation values
+        cards.forEach((card, index) => {
+          card.style.setProperty('--rotation', `${index * 60}deg`);
+        });
+
+        // Add touch support
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        circle.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          isRotating = false;
+          circle.style.animationPlayState = 'paused';
+        });
+
+        circle.addEventListener('touchmove', (e) => {
+          if (!isRotating) {
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            const deltaX = touchX - touchStartX;
+            const deltaY = touchY - touchStartY;
+            
+            currentRotation += deltaX * 0.5;
+            circle.style.transform = `rotateY(${currentRotation}deg)`;
+            
+            touchStartX = touchX;
+            touchStartY = touchY;
+          }
+        });
+
+        circle.addEventListener('touchend', () => {
+          isRotating = true;
+          circle.style.animationPlayState = 'running';
+        });
+      });
+    </script>
+</body>
+</html>
